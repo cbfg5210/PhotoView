@@ -5,16 +5,16 @@ apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.cbfg5210'
 
 android {
-    compileSdkVersion rootProject.ext.sdkVersion
+    compileSdkVersion buildVersions.targetSdk
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion rootProject.ext.sdkVersion
+        minSdkVersion buildVersions.minSdk
+        targetSdkVersion buildVersions.targetSdk
         versionCode 1
         versionName "1.0"
     }
 }
 
 dependencies {
-    compileOnly "com.android.support:support-core-utils:$supportLibVersion"
+    compileOnly deps.support.core
 }
