@@ -42,55 +42,55 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         View.OnLayoutChangeListener {
 
     private static float DEFAULT_MAX_SCALE = 3.0f;
-    protected static float DEFAULT_MID_SCALE = 1.75f;
+    public static float DEFAULT_MID_SCALE = 1.75f;
     private static float DEFAULT_MIN_SCALE = 1.0f;
     private static int DEFAULT_ZOOM_DURATION = 200;
 
-    protected static final int EDGE_NONE = -1;
-    protected static final int EDGE_LEFT = 0;
-    protected static final int EDGE_RIGHT = 1;
-    protected static final int EDGE_BOTH = 2;
+    public static final int EDGE_NONE = -1;
+    public static final int EDGE_LEFT = 0;
+    public static final int EDGE_RIGHT = 1;
+    public static final int EDGE_BOTH = 2;
     private static int SINGLE_TOUCH = 1;
 
     private Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
     private int mZoomDuration = DEFAULT_ZOOM_DURATION;
-    protected float mMinScale = DEFAULT_MIN_SCALE;
-    protected float mMidScale = DEFAULT_MID_SCALE;
-    protected float mMaxScale = DEFAULT_MAX_SCALE;
+    public float mMinScale = DEFAULT_MIN_SCALE;
+    public float mMidScale = DEFAULT_MID_SCALE;
+    public float mMaxScale = DEFAULT_MAX_SCALE;
 
     private boolean mAllowParentInterceptOnEdge = true;
-    protected boolean mBlockParentIntercept;
+    public boolean mBlockParentIntercept;
 
-    protected ImageView mImageView;
+    public ImageView mImageView;
 
     // Gesture Detectors
-    protected GestureDetector mGestureDetector;
-    protected CustomGestureDetector mScaleDragDetector;
+    public GestureDetector mGestureDetector;
+    public CustomGestureDetector mScaleDragDetector;
 
     // These are set so we don't keep allocating them on the heap
-    protected final Matrix mBaseMatrix = new Matrix();
-    protected final Matrix mDrawMatrix = new Matrix();
-    protected final Matrix mSuppMatrix = new Matrix();
-    protected final RectF mDisplayRect = new RectF();
+    public final Matrix mBaseMatrix = new Matrix();
+    public final Matrix mDrawMatrix = new Matrix();
+    public final Matrix mSuppMatrix = new Matrix();
+    public final RectF mDisplayRect = new RectF();
     private final float[] mMatrixValues = new float[9];
 
     // Listeners
-    protected OnMatrixChangedListener mMatrixChangeListener;
-    protected OnPhotoTapListener mPhotoTapListener;
+    public OnMatrixChangedListener mMatrixChangeListener;
+    public OnPhotoTapListener mPhotoTapListener;
     private OnOutsidePhotoTapListener mOutsidePhotoTapListener;
-    protected OnViewTapListener mViewTapListener;
+    public OnViewTapListener mViewTapListener;
     private View.OnClickListener mOnClickListener;
-    protected OnLongClickListener mLongClickListener;
-    protected OnScaleChangedListener mScaleChangeListener;
+    public OnLongClickListener mLongClickListener;
+    public OnScaleChangedListener mScaleChangeListener;
     private OnSingleFlingListener mSingleFlingListener;
     private OnViewDragListener mOnViewDragListener;
 
     private FlingRunnable mCurrentFlingRunnable;
-    protected int mScrollEdge = EDGE_BOTH;
+    public int mScrollEdge = EDGE_BOTH;
     private float mBaseRotation;
 
-    protected boolean mZoomEnabled = true;
-    protected ScaleType mScaleType = ScaleType.FIT_CENTER;
+    public boolean mZoomEnabled = true;
+    public ScaleType mScaleType = ScaleType.FIT_CENTER;
 
     public PhotoViewAttacher(ImageView imageView) {
         mImageView = imageView;
@@ -534,7 +534,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         matrix.set(mSuppMatrix);
     }
 
-    protected Matrix getDrawMatrix() {
+    public Matrix getDrawMatrix() {
         mDrawMatrix.set(mBaseMatrix);
         mDrawMatrix.postConcat(mSuppMatrix);
         return mDrawMatrix;
@@ -563,14 +563,14 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     /**
      * Resets the Matrix back to FIT_CENTER, and then displays its contents
      */
-    protected void resetMatrix() {
+    public void resetMatrix() {
         mSuppMatrix.reset();
         setRotationBy(mBaseRotation);
         setImageViewMatrix(getDrawMatrix());
         checkMatrixBounds();
     }
 
-    protected void setImageViewMatrix(Matrix matrix) {
+    public void setImageViewMatrix(Matrix matrix) {
         mImageView.setImageMatrix(matrix);
         // Call MatrixChangedListener if needed
         if (mMatrixChangeListener != null) {
@@ -584,7 +584,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     /**
      * Helper method that simply checks the Matrix, and then displays the result
      */
-    protected void checkAndDisplayMatrix() {
+    public void checkAndDisplayMatrix() {
         if (checkMatrixBounds()) {
             setImageViewMatrix(getDrawMatrix());
         }
@@ -596,7 +596,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
      * @param matrix - Matrix to map Drawable against
      * @return RectF - Displayed Rectangle
      */
-    protected RectF getDisplayRect(Matrix matrix) {
+    public RectF getDisplayRect(Matrix matrix) {
         Drawable d = mImageView.getDrawable();
         if (d != null) {
             mDisplayRect.set(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
@@ -611,7 +611,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
      *
      * @param drawable - Drawable being displayed
      */
-    protected void updateBaseMatrix(Drawable drawable) {
+    public void updateBaseMatrix(Drawable drawable) {
         if (drawable == null) {
             return;
         }
@@ -674,7 +674,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         resetMatrix();
     }
 
-    protected boolean checkMatrixBounds() {
+    public boolean checkMatrixBounds() {
         final RectF rect = getDisplayRect(getDrawMatrix());
         if (rect == null) {
             return false;
@@ -739,14 +739,14 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         return imageView.getHeight() - imageView.getPaddingTop() - imageView.getPaddingBottom();
     }
 
-    protected void cancelFling() {
+    public void cancelFling() {
         if (mCurrentFlingRunnable != null) {
             mCurrentFlingRunnable.cancelFling();
             mCurrentFlingRunnable = null;
         }
     }
 
-    protected class AnimatedZoomRunnable implements Runnable {
+    public class AnimatedZoomRunnable implements Runnable {
 
         private final float mFocalX, mFocalY;
         private final long mStartTime;
@@ -784,7 +784,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         }
     }
 
-    protected class FlingRunnable implements Runnable {
+    public class FlingRunnable implements Runnable {
 
         private final OverScroller mScroller;
         private int mCurrentX, mCurrentY;

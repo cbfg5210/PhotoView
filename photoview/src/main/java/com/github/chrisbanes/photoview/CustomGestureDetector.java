@@ -41,8 +41,7 @@ public class CustomGestureDetector {
     private OnGestureListener mListener;
 
     public CustomGestureDetector(Context context, OnGestureListener listener) {
-        final ViewConfiguration configuration = ViewConfiguration
-                .get(context);
+        final ViewConfiguration configuration = ViewConfiguration.get(context);
         mMinimumVelocity = configuration.getScaledMinimumFlingVelocity();
         mTouchSlop = configuration.getScaledTouchSlop();
 
@@ -195,9 +194,8 @@ public class CustomGestureDetector {
                 break;
         }
 
-        mActivePointerIndex = ev
-                .findPointerIndex(mActivePointerId != INVALID_POINTER_ID ? mActivePointerId
-                        : 0);
+        mActivePointerIndex =
+                ev.findPointerIndex(mActivePointerId != INVALID_POINTER_ID ? mActivePointerId : 0);
         return true;
     }
 }
